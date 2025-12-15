@@ -7,7 +7,7 @@
     "dev:web": "pnpm --filter web-next dev",
     "build:web": "pnpm --filter web-next build",
     "start:web": "pnpm --filter web-next start",
-    "dev:mini": "pnpm --filter mini-taro dev",
+    "dev:mini": "pnpm --filter mini-taro dev:weapp",
     "build:mini:weapp": "pnpm --filter mini-taro build --type weapp",
     "build:mini:h5": "pnpm --filter mini-taro build --type h5"
   },

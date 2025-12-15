@@ -23,11 +23,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/allCategory/index",
-          "pathName": "pages/allCategory/index",
+          "name": "pages/login/index",
+          "pathName": "pages/login/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages/allCategory/index",
+          "pathName": "pages/allCategory/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

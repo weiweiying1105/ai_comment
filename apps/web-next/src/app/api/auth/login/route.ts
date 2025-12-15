@@ -1,12 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
-import jwt from 'jsonwebtoken';
+import { NextRequest } from "next/server";
+import jwt, { Secret, SignOptions } from 'jsonwebtoken';
 import prisma from '@/lib/prisma'
 import { createJsonResponse, ResponseUtil } from "@/lib/response";
 
 // 小程序相关配置
 const WECHAT_CONFIG = {
-    appid: process.env.WECHAT_APPID,
-    appSecret: process.env.WECHAT_APPSECRET,
+    // 兼容两种环境变量命名：WECHAT_APP_ID / WECHAT_APPID；WECHAT_APP_SECRET / WECHAT_APPSECRET
+    appid: process.env.WECHAT_APP_ID,
+    appSecret: process.env.WECHAT_APP_SECRET,
     grantType: 'authorization_code',
 }
 
@@ -27,71 +28,75 @@ interface LoginRequest {
 
 export async function POST(request: NextRequest) {
     try {
-        // 尝试从请求体获取数据，但如果请求体为空或不是JSON格式，则捕获错误
+        // 校验服务端必要配置
+        if (!WECHAT_CONFIG.appid || !WECHAT_CONFIG.appSecret) {
+            return createJsonResponse(
+                ResponseUtil.error('服务端未配置微信AppID或AppSecret'),
+                { status: 500 }
+            )
+        }
+        if (!JWT_SECRET) {
+            return createJsonResponse(
+                ResponseUtil.error('服务端未配置JWT_SECRET'),
+                { status: 500 }
+            )
+        }
+
+        // 从请求体或查询参数获取 code
         let body: LoginRequest = { code: '' };
         let code: string | null = null;
-        // let nickName: string | undefined;
-        // let avatarUrl: string | undefined;
-
         try {
             body = await request.json();
             code = body.code;
-            // nickName = body.nickName;
-            // avatarUrl = body.avatarUrl;
         } catch (error) {
-            // json 解析失败，尝试从查询参数中找code
             code = request.nextUrl.searchParams.get('code')
         }
         if (!code) {
             return createJsonResponse(ResponseUtil.error('code不能为空'), { status: 400 })
         }
-        // 第一步：使用code向微信服务器获取openid和session_key
-        const wechatUrl = `https://api.weixin.qq.com/sns/jscode2session?appid=${WECHAT_CONFIG.appId}&secret=${WECHAT_CONFIG.appSecret}&js_code=${code}&grant_type=${WECHAT_CONFIG.grantType}`
+
+        // 1）用 code 交换 openid/session_key
+        const wechatUrl = `https://api.weixin.qq.com/sns/jscode2session?appid=${WECHAT_CONFIG.appid}&secret=${WECHAT_CONFIG.appSecret}&js_code=${encodeURIComponent(code)}&grant_type=${WECHAT_CONFIG.grantType}`
         const wxResponse = await fetch(wechatUrl);
         const wxData: WechatLoginResponse = await wxResponse.json();
-        // 检察API是否调用成功
+        console.log('微信登录响应', wxData)
         if (wxData.errcode) {
             return createJsonResponse(
                 ResponseUtil.error(`微信登录失败: ${wxData.errmsg}`),
                 { status: 400 }
             )
         }
-        const { openid, session_key } = wxData;
+        const { openid } = wxData;
 
-        // 根据opened查用户是否存在
+        // 2）查找或创建用户
         let user = await prisma.user.findUnique({
-            where: {
-                openId: openid,
-            }
+            where: { openId: openid }
         })
         if (!user) {
-            // 不存在则创建用户
             user = await prisma.user.create({
-                data: {
-                    openId: openid,
-                }
+                data: { openId: openid }
             })
         } else {
-            // 存在则更新最后登录时间
             user = await prisma.user.update({
                 where: { openId: openid },
-                data: {
-                    lastLoginAt: new Date()
-                }
+                data: { lastLoginAt: new Date() }
             })
         }
-        // 生成JWT token
+
+        // 3）签发 JWT
         const tokenPayload = {
             userId: user.id,
-            openId: user.openId,
-            nickname: user.nickName,
             iat: Math.floor(Date.now() / 1000),
-            exp: process.env.JWT_EXPIRES_IN,
-
         }
-        const token = jwt.sign(tokenPayload, JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN,
-        })
+        const expiresInConfig = process.env.JWT_EXPIRES_IN
+        const expiresIn: number | string = expiresInConfig && /^\d+$/.test(expiresInConfig)
+            ? Number(expiresInConfig)
+            : (expiresInConfig || '7d')
+        const signOptions: SignOptions = {
+            expiresIn: expiresIn as any,
+        }
+        const token = jwt.sign(tokenPayload, JWT_SECRET as Secret, signOptions as any)
+
         const responseData = {
             token,
             userId: user.id,

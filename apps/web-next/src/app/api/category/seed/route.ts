@@ -6,8 +6,8 @@ import { ResponseUtil, createJsonResponse } from '@/lib/response'
 async function upsertCategory(name: string, parentId: number | null) {
     const cat = await prisma.category.upsert({
         where: { name },
-        update: { name, parentId: parentId ?? undefined },
-        create: { name, parentId: parentId ?? undefined },
+        update: { name, parentId: parentId ?? null },
+        create: { name, parentId: parentId ?? null },
     })
     return cat
 }
@@ -39,7 +39,10 @@ export async function POST(req: NextRequest) {
         )
     } catch (error: any) {
         console.error('Seed categories error:', error)
-        return createJsonResponse(ResponseUtil.error('分类导入失败'), { status: 500 })
+        return createJsonResponse(
+            ResponseUtil.error(`分类导入失败: ${error?.message || String(error)}`),
+            { status: 500 }
+        )
     }
 }
 

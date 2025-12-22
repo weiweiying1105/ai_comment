@@ -298,7 +298,7 @@ redirectToLogin.redirecting = false
 export default request
 
 // 导出常用的请求方法
-export const get = <T = any>(url: string, params?: any): Promise<T> => {
+export const httpGet = <T = any>(url: string, params?: any): Promise<T> => {
     let fullUrl = url
     if (params) {
         // 使用小程序兼容的方式拼接查询参数
@@ -314,7 +314,7 @@ export const get = <T = any>(url: string, params?: any): Promise<T> => {
     return request<T>(config)
 }
 
-export const post = <T = any>(url: string, data?: any): Promise<T> => {
+export const httpPost = <T = any>(url: string, data?: any): Promise<T> => {
     const config: RequestConfig = {
         url,
         method: 'POST',

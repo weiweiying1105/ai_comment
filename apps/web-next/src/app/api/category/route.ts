@@ -2,13 +2,23 @@ import { NextRequest } from 'next/server'
 import prisma from '@/lib/prisma'
 import { createJsonResponse, ResponseUtil } from '@/lib/response'
 
+const selectFields = {
+    id: true,
+    name: true,
+    parentId: true,
+    keyword: true,
+    icon: true,
+}
+
 type CategoryNode = {
     id: number
     name: string
     parentId: number | null
+    keyword: string | null
+    icon: string | null
     children: CategoryNode[]
 }
-function buildCategoryTree(items: { id: number; name: string; parentId: number | null }[]): CategoryNode[] {
+function buildCategoryTree(items: { id: number; name: string; parentId: number | null; keyword: string | null; icon: string | null }[]): CategoryNode[] {
     const nodeMap = new Map<number, CategoryNode>()
     const roots: CategoryNode[] = []
 
@@ -18,6 +28,8 @@ function buildCategoryTree(items: { id: number; name: string; parentId: number |
             id: it.id,
             name: it.name,
             parentId: it.parentId,
+            keyword: it.keyword,
+            icon: it.icon,
             children: []
         })
     }
@@ -40,22 +52,39 @@ function buildCategoryTree(items: { id: number; name: string; parentId: number |
     return roots
 }
 
-
 export async function OPTIONS() {
     return createJsonResponse(ResponseUtil.success(null), { status: 204 })
 }
 
 export async function GET(req: NextRequest) {
     try {
+        const { searchParams } = new URL(req.url)
+        const keyword = searchParams.get('keyword') || undefined
+        const top = searchParams.get('top')
+        const parentIdParam = searchParams.get('parentId')
+
+        // 按需过滤
+        const where: any = {}
+        if (keyword) where.keyword = keyword
+        if (top) where.parentId = null
+        if (parentIdParam) where.parentId = Number(parentIdParam)
+
         const categories = await prisma.category.findMany({
-            select: { id: true, name: true, parentId: true },
+            where,
+            select: selectFields,
             orderBy: [{ parentId: 'asc' }, { id: 'asc' }]
         })
-        console.log(categories)
+
+        // 如果存在 parentId/顶级/keyword 过滤，则直接返回扁平列表
+        if (keyword || top || parentIdParam) {
+            return createJsonResponse(
+                ResponseUtil.success(categories, '分类查询成功（含keyword与icon）')
+            )
+        }
 
         const tree = buildCategoryTree(categories)
         return createJsonResponse(
-            ResponseUtil.success(tree, '分类树查询成功')
+            ResponseUtil.success(tree, '分类树查询成功（含keyword与icon）')
         )
     } catch (error: any) {
         return createJsonResponse(
@@ -64,3 +93,4 @@ export async function GET(req: NextRequest) {
         )
     }
 }
+// 移除重复的 CategoryNode 接口定义

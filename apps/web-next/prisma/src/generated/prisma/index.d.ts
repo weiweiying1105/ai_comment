@@ -1010,6 +1010,36 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type CategoryCountOutputType
+   */
+
+  export type CategoryCountOutputType = {
+    comments: number
+  }
+
+  export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    comments?: boolean | CategoryCountOutputTypeCountCommentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategoryCountOutputType
+     */
+    select?: CategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GoodCommentWhereInput
+  }
+
 
   /**
    * Models
@@ -2073,6 +2103,8 @@ export namespace Prisma {
     id: number | null
     name: string | null
     parentId: number | null
+    keyword: string | null
+    icon: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2081,6 +2113,8 @@ export namespace Prisma {
     id: number | null
     name: string | null
     parentId: number | null
+    keyword: string | null
+    icon: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2089,6 +2123,8 @@ export namespace Prisma {
     id: number
     name: number
     parentId: number
+    keyword: number
+    icon: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2109,6 +2145,8 @@ export namespace Prisma {
     id?: true
     name?: true
     parentId?: true
+    keyword?: true
+    icon?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2117,6 +2155,8 @@ export namespace Prisma {
     id?: true
     name?: true
     parentId?: true
+    keyword?: true
+    icon?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2125,6 +2165,8 @@ export namespace Prisma {
     id?: true
     name?: true
     parentId?: true
+    keyword?: true
+    icon?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2220,6 +2262,8 @@ export namespace Prisma {
     id: number
     name: string
     parentId: number | null
+    keyword: string | null
+    icon: string | null
     createdAt: Date
     updatedAt: Date
     _count: CategoryCountAggregateOutputType | null
@@ -2247,14 +2291,20 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     parentId?: boolean
+    keyword?: boolean
+    icon?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    comments?: boolean | Category$commentsArgs<ExtArgs>
+    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     parentId?: boolean
+    keyword?: boolean
+    icon?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["category"]>
@@ -2263,18 +2313,29 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     parentId?: boolean
+    keyword?: boolean
+    icon?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
+  export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    comments?: boolean | Category$commentsArgs<ExtArgs>
+    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $CategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Category"
-    objects: {}
+    objects: {
+      comments: Prisma.$GoodCommentPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
       parentId: number | null
+      keyword: string | null
+      icon: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["category"]>
@@ -2641,6 +2702,7 @@ export namespace Prisma {
    */
   export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    comments<T extends Category$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Category$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoodCommentPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2673,6 +2735,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Category", 'Int'>
     readonly name: FieldRef<"Category", 'String'>
     readonly parentId: FieldRef<"Category", 'Int'>
+    readonly keyword: FieldRef<"Category", 'String'>
+    readonly icon: FieldRef<"Category", 'String'>
     readonly createdAt: FieldRef<"Category", 'DateTime'>
     readonly updatedAt: FieldRef<"Category", 'DateTime'>
   }
@@ -2688,6 +2752,10 @@ export namespace Prisma {
      */
     select?: CategorySelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
      * Filter, which Category to fetch.
      */
     where: CategoryWhereUniqueInput
@@ -2702,6 +2770,10 @@ export namespace Prisma {
      */
     select?: CategorySelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
      * Filter, which Category to fetch.
      */
     where: CategoryWhereUniqueInput
@@ -2715,6 +2787,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Category
      */
     select?: CategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
     /**
      * Filter, which Category to fetch.
      */
@@ -2760,6 +2836,10 @@ export namespace Prisma {
      */
     select?: CategorySelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
      * Filter, which Category to fetch.
      */
     where?: CategoryWhereInput
@@ -2804,6 +2884,10 @@ export namespace Prisma {
      */
     select?: CategorySelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
      * Filter, which Categories to fetch.
      */
     where?: CategoryWhereInput
@@ -2842,6 +2926,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Category
      */
     select?: CategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
     /**
      * The data needed to create a Category.
      */
@@ -2883,6 +2971,10 @@ export namespace Prisma {
      */
     select?: CategorySelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
      * The data needed to update a Category.
      */
     data: XOR<CategoryUpdateInput, CategoryUncheckedUpdateInput>
@@ -2915,6 +3007,10 @@ export namespace Prisma {
      */
     select?: CategorySelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
      * The filter to search for the Category to update in case it exists.
      */
     where: CategoryWhereUniqueInput
@@ -2937,6 +3033,10 @@ export namespace Prisma {
      */
     select?: CategorySelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
      * Filter which Category to delete.
      */
     where: CategoryWhereUniqueInput
@@ -2953,6 +3053,26 @@ export namespace Prisma {
   }
 
   /**
+   * Category.comments
+   */
+  export type Category$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoodComment
+     */
+    select?: GoodCommentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
+    where?: GoodCommentWhereInput
+    orderBy?: GoodCommentOrderByWithRelationInput | GoodCommentOrderByWithRelationInput[]
+    cursor?: GoodCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GoodCommentScalarFieldEnum | GoodCommentScalarFieldEnum[]
+  }
+
+  /**
    * Category without action
    */
   export type CategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2960,6 +3080,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Category
      */
     select?: CategorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
   }
 
 
@@ -2978,18 +3102,21 @@ export namespace Prisma {
   export type GoodCommentAvgAggregateOutputType = {
     id: number | null
     commentId: number | null
+    category: number | null
   }
 
   export type GoodCommentSumAggregateOutputType = {
     id: number | null
     commentId: number | null
+    category: number | null
   }
 
   export type GoodCommentMinAggregateOutputType = {
     id: number | null
     userId: string | null
     commentId: number | null
-    category: string | null
+    category: number | null
+    categoryName: string | null
     content: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2999,7 +3126,8 @@ export namespace Prisma {
     id: number | null
     userId: string | null
     commentId: number | null
-    category: string | null
+    category: number | null
+    categoryName: string | null
     content: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3010,6 +3138,7 @@ export namespace Prisma {
     userId: number
     commentId: number
     category: number
+    categoryName: number
     content: number
     createdAt: number
     updatedAt: number
@@ -3020,11 +3149,13 @@ export namespace Prisma {
   export type GoodCommentAvgAggregateInputType = {
     id?: true
     commentId?: true
+    category?: true
   }
 
   export type GoodCommentSumAggregateInputType = {
     id?: true
     commentId?: true
+    category?: true
   }
 
   export type GoodCommentMinAggregateInputType = {
@@ -3032,6 +3163,7 @@ export namespace Prisma {
     userId?: true
     commentId?: true
     category?: true
+    categoryName?: true
     content?: true
     createdAt?: true
     updatedAt?: true
@@ -3042,6 +3174,7 @@ export namespace Prisma {
     userId?: true
     commentId?: true
     category?: true
+    categoryName?: true
     content?: true
     createdAt?: true
     updatedAt?: true
@@ -3052,6 +3185,7 @@ export namespace Prisma {
     userId?: true
     commentId?: true
     category?: true
+    categoryName?: true
     content?: true
     createdAt?: true
     updatedAt?: true
@@ -3148,7 +3282,8 @@ export namespace Prisma {
     id: number
     userId: string
     commentId: number
-    category: string
+    category: number
+    categoryName: string
     content: string
     createdAt: Date
     updatedAt: Date
@@ -3178,9 +3313,11 @@ export namespace Prisma {
     userId?: boolean
     commentId?: boolean
     category?: boolean
+    categoryName?: boolean
     content?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    categoryCategory?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["goodComment"]>
 
   export type GoodCommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3188,9 +3325,11 @@ export namespace Prisma {
     userId?: boolean
     commentId?: boolean
     category?: boolean
+    categoryName?: boolean
     content?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    categoryCategory?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["goodComment"]>
 
   export type GoodCommentSelectScalar = {
@@ -3198,20 +3337,30 @@ export namespace Prisma {
     userId?: boolean
     commentId?: boolean
     category?: boolean
+    categoryName?: boolean
     content?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
+  export type GoodCommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoryCategory?: boolean | CategoryDefaultArgs<ExtArgs>
+  }
+  export type GoodCommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categoryCategory?: boolean | CategoryDefaultArgs<ExtArgs>
+  }
 
   export type $GoodCommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "GoodComment"
-    objects: {}
+    objects: {
+      categoryCategory: Prisma.$CategoryPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: string
       commentId: number
-      category: string
+      category: number
+      categoryName: string
       content: string
       createdAt: Date
       updatedAt: Date
@@ -3579,6 +3728,7 @@ export namespace Prisma {
    */
   export interface Prisma__GoodCommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    categoryCategory<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3611,7 +3761,8 @@ export namespace Prisma {
     readonly id: FieldRef<"GoodComment", 'Int'>
     readonly userId: FieldRef<"GoodComment", 'String'>
     readonly commentId: FieldRef<"GoodComment", 'Int'>
-    readonly category: FieldRef<"GoodComment", 'String'>
+    readonly category: FieldRef<"GoodComment", 'Int'>
+    readonly categoryName: FieldRef<"GoodComment", 'String'>
     readonly content: FieldRef<"GoodComment", 'String'>
     readonly createdAt: FieldRef<"GoodComment", 'DateTime'>
     readonly updatedAt: FieldRef<"GoodComment", 'DateTime'>
@@ -3628,6 +3779,10 @@ export namespace Prisma {
      */
     select?: GoodCommentSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
+    /**
      * Filter, which GoodComment to fetch.
      */
     where: GoodCommentWhereUniqueInput
@@ -3642,6 +3797,10 @@ export namespace Prisma {
      */
     select?: GoodCommentSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
+    /**
      * Filter, which GoodComment to fetch.
      */
     where: GoodCommentWhereUniqueInput
@@ -3655,6 +3814,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the GoodComment
      */
     select?: GoodCommentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
     /**
      * Filter, which GoodComment to fetch.
      */
@@ -3700,6 +3863,10 @@ export namespace Prisma {
      */
     select?: GoodCommentSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
+    /**
      * Filter, which GoodComment to fetch.
      */
     where?: GoodCommentWhereInput
@@ -3744,6 +3911,10 @@ export namespace Prisma {
      */
     select?: GoodCommentSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
+    /**
      * Filter, which GoodComments to fetch.
      */
     where?: GoodCommentWhereInput
@@ -3783,6 +3954,10 @@ export namespace Prisma {
      */
     select?: GoodCommentSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
+    /**
      * The data needed to create a GoodComment.
      */
     data: XOR<GoodCommentCreateInput, GoodCommentUncheckedCreateInput>
@@ -3812,6 +3987,10 @@ export namespace Prisma {
      */
     data: GoodCommentCreateManyInput | GoodCommentCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3822,6 +4001,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the GoodComment
      */
     select?: GoodCommentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
     /**
      * The data needed to update a GoodComment.
      */
@@ -3855,6 +4038,10 @@ export namespace Prisma {
      */
     select?: GoodCommentSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
+    /**
      * The filter to search for the GoodComment to update in case it exists.
      */
     where: GoodCommentWhereUniqueInput
@@ -3876,6 +4063,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the GoodComment
      */
     select?: GoodCommentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
     /**
      * Filter which GoodComment to delete.
      */
@@ -3900,6 +4091,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the GoodComment
      */
     select?: GoodCommentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoodCommentInclude<ExtArgs> | null
   }
 
 
@@ -3942,6 +4137,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     parentId: 'parentId',
+    keyword: 'keyword',
+    icon: 'icon',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3954,6 +4151,7 @@ export namespace Prisma {
     userId: 'userId',
     commentId: 'commentId',
     category: 'category',
+    categoryName: 'categoryName',
     content: 'content',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -4161,16 +4359,22 @@ export namespace Prisma {
     id?: IntFilter<"Category"> | number
     name?: StringFilter<"Category"> | string
     parentId?: IntNullableFilter<"Category"> | number | null
+    keyword?: StringNullableFilter<"Category"> | string | null
+    icon?: StringNullableFilter<"Category"> | string | null
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
+    comments?: GoodCommentListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     parentId?: SortOrderInput | SortOrder
+    keyword?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    comments?: GoodCommentOrderByRelationAggregateInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -4180,14 +4384,19 @@ export namespace Prisma {
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     parentId?: IntNullableFilter<"Category"> | number | null
+    keyword?: StringNullableFilter<"Category"> | string | null
+    icon?: StringNullableFilter<"Category"> | string | null
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
+    comments?: GoodCommentListRelationFilter
   }, "id" | "name">
 
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     parentId?: SortOrderInput | SortOrder
+    keyword?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CategoryCountOrderByAggregateInput
@@ -4204,6 +4413,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Category"> | number
     name?: StringWithAggregatesFilter<"Category"> | string
     parentId?: IntNullableWithAggregatesFilter<"Category"> | number | null
+    keyword?: StringNullableWithAggregatesFilter<"Category"> | string | null
+    icon?: StringNullableWithAggregatesFilter<"Category"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
   }
@@ -4215,10 +4426,12 @@ export namespace Prisma {
     id?: IntFilter<"GoodComment"> | number
     userId?: StringFilter<"GoodComment"> | string
     commentId?: IntFilter<"GoodComment"> | number
-    category?: StringFilter<"GoodComment"> | string
+    category?: IntFilter<"GoodComment"> | number
+    categoryName?: StringFilter<"GoodComment"> | string
     content?: StringFilter<"GoodComment"> | string
     createdAt?: DateTimeFilter<"GoodComment"> | Date | string
     updatedAt?: DateTimeFilter<"GoodComment"> | Date | string
+    categoryCategory?: XOR<CategoryRelationFilter, CategoryWhereInput>
   }
 
   export type GoodCommentOrderByWithRelationInput = {
@@ -4226,9 +4439,11 @@ export namespace Prisma {
     userId?: SortOrder
     commentId?: SortOrder
     category?: SortOrder
+    categoryName?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    categoryCategory?: CategoryOrderByWithRelationInput
   }
 
   export type GoodCommentWhereUniqueInput = Prisma.AtLeast<{
@@ -4238,10 +4453,12 @@ export namespace Prisma {
     NOT?: GoodCommentWhereInput | GoodCommentWhereInput[]
     userId?: StringFilter<"GoodComment"> | string
     commentId?: IntFilter<"GoodComment"> | number
-    category?: StringFilter<"GoodComment"> | string
+    category?: IntFilter<"GoodComment"> | number
+    categoryName?: StringFilter<"GoodComment"> | string
     content?: StringFilter<"GoodComment"> | string
     createdAt?: DateTimeFilter<"GoodComment"> | Date | string
     updatedAt?: DateTimeFilter<"GoodComment"> | Date | string
+    categoryCategory?: XOR<CategoryRelationFilter, CategoryWhereInput>
   }, "id">
 
   export type GoodCommentOrderByWithAggregationInput = {
@@ -4249,6 +4466,7 @@ export namespace Prisma {
     userId?: SortOrder
     commentId?: SortOrder
     category?: SortOrder
+    categoryName?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4266,7 +4484,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"GoodComment"> | number
     userId?: StringWithAggregatesFilter<"GoodComment"> | string
     commentId?: IntWithAggregatesFilter<"GoodComment"> | number
-    category?: StringWithAggregatesFilter<"GoodComment"> | string
+    category?: IntWithAggregatesFilter<"GoodComment"> | number
+    categoryName?: StringWithAggregatesFilter<"GoodComment"> | string
     content?: StringWithAggregatesFilter<"GoodComment"> | string
     createdAt?: DateTimeWithAggregatesFilter<"GoodComment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"GoodComment"> | Date | string
@@ -4401,37 +4620,51 @@ export namespace Prisma {
   export type CategoryCreateInput = {
     name: string
     parentId?: number | null
+    keyword?: string | null
+    icon?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    comments?: GoodCommentCreateNestedManyWithoutCategoryCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
     id?: number
     name: string
     parentId?: number | null
+    keyword?: string | null
+    icon?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    comments?: GoodCommentUncheckedCreateNestedManyWithoutCategoryCategoryInput
   }
 
   export type CategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
+    keyword?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: GoodCommentUpdateManyWithoutCategoryCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
+    keyword?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: GoodCommentUncheckedUpdateManyWithoutCategoryCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
     id?: number
     name: string
     parentId?: number | null
+    keyword?: string | null
+    icon?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4439,6 +4672,8 @@ export namespace Prisma {
   export type CategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
+    keyword?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4447,6 +4682,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
+    keyword?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4454,17 +4691,19 @@ export namespace Prisma {
   export type GoodCommentCreateInput = {
     userId?: string
     commentId?: number
-    category?: string
+    categoryName: string
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    categoryCategory: CategoryCreateNestedOneWithoutCommentsInput
   }
 
   export type GoodCommentUncheckedCreateInput = {
     id?: number
     userId?: string
     commentId?: number
-    category?: string
+    category: number
+    categoryName: string
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4473,17 +4712,19 @@ export namespace Prisma {
   export type GoodCommentUpdateInput = {
     userId?: StringFieldUpdateOperationsInput | string
     commentId?: IntFieldUpdateOperationsInput | number
-    category?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categoryCategory?: CategoryUpdateOneRequiredWithoutCommentsNestedInput
   }
 
   export type GoodCommentUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     commentId?: IntFieldUpdateOperationsInput | number
-    category?: StringFieldUpdateOperationsInput | string
+    category?: IntFieldUpdateOperationsInput | number
+    categoryName?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4493,7 +4734,8 @@ export namespace Prisma {
     id?: number
     userId?: string
     commentId?: number
-    category?: string
+    category: number
+    categoryName: string
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4502,7 +4744,7 @@ export namespace Prisma {
   export type GoodCommentUpdateManyMutationInput = {
     userId?: StringFieldUpdateOperationsInput | string
     commentId?: IntFieldUpdateOperationsInput | number
-    category?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4512,7 +4754,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     commentId?: IntFieldUpdateOperationsInput | number
-    category?: StringFieldUpdateOperationsInput | string
+    category?: IntFieldUpdateOperationsInput | number
+    categoryName?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4714,10 +4957,22 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type GoodCommentListRelationFilter = {
+    every?: GoodCommentWhereInput
+    some?: GoodCommentWhereInput
+    none?: GoodCommentWhereInput
+  }
+
+  export type GoodCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     parentId?: SortOrder
+    keyword?: SortOrder
+    icon?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4731,6 +4986,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     parentId?: SortOrder
+    keyword?: SortOrder
+    icon?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4739,6 +4996,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     parentId?: SortOrder
+    keyword?: SortOrder
+    icon?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4764,11 +5023,17 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type CategoryRelationFilter = {
+    is?: CategoryWhereInput
+    isNot?: CategoryWhereInput
+  }
+
   export type GoodCommentCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     commentId?: SortOrder
     category?: SortOrder
+    categoryName?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4777,6 +5042,7 @@ export namespace Prisma {
   export type GoodCommentAvgOrderByAggregateInput = {
     id?: SortOrder
     commentId?: SortOrder
+    category?: SortOrder
   }
 
   export type GoodCommentMaxOrderByAggregateInput = {
@@ -4784,6 +5050,7 @@ export namespace Prisma {
     userId?: SortOrder
     commentId?: SortOrder
     category?: SortOrder
+    categoryName?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4794,6 +5061,7 @@ export namespace Prisma {
     userId?: SortOrder
     commentId?: SortOrder
     category?: SortOrder
+    categoryName?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4802,6 +5070,7 @@ export namespace Prisma {
   export type GoodCommentSumOrderByAggregateInput = {
     id?: SortOrder
     commentId?: SortOrder
+    category?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4824,12 +5093,68 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type GoodCommentCreateNestedManyWithoutCategoryCategoryInput = {
+    create?: XOR<GoodCommentCreateWithoutCategoryCategoryInput, GoodCommentUncheckedCreateWithoutCategoryCategoryInput> | GoodCommentCreateWithoutCategoryCategoryInput[] | GoodCommentUncheckedCreateWithoutCategoryCategoryInput[]
+    connectOrCreate?: GoodCommentCreateOrConnectWithoutCategoryCategoryInput | GoodCommentCreateOrConnectWithoutCategoryCategoryInput[]
+    createMany?: GoodCommentCreateManyCategoryCategoryInputEnvelope
+    connect?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+  }
+
+  export type GoodCommentUncheckedCreateNestedManyWithoutCategoryCategoryInput = {
+    create?: XOR<GoodCommentCreateWithoutCategoryCategoryInput, GoodCommentUncheckedCreateWithoutCategoryCategoryInput> | GoodCommentCreateWithoutCategoryCategoryInput[] | GoodCommentUncheckedCreateWithoutCategoryCategoryInput[]
+    connectOrCreate?: GoodCommentCreateOrConnectWithoutCategoryCategoryInput | GoodCommentCreateOrConnectWithoutCategoryCategoryInput[]
+    createMany?: GoodCommentCreateManyCategoryCategoryInputEnvelope
+    connect?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+  }
+
+  export type GoodCommentUpdateManyWithoutCategoryCategoryNestedInput = {
+    create?: XOR<GoodCommentCreateWithoutCategoryCategoryInput, GoodCommentUncheckedCreateWithoutCategoryCategoryInput> | GoodCommentCreateWithoutCategoryCategoryInput[] | GoodCommentUncheckedCreateWithoutCategoryCategoryInput[]
+    connectOrCreate?: GoodCommentCreateOrConnectWithoutCategoryCategoryInput | GoodCommentCreateOrConnectWithoutCategoryCategoryInput[]
+    upsert?: GoodCommentUpsertWithWhereUniqueWithoutCategoryCategoryInput | GoodCommentUpsertWithWhereUniqueWithoutCategoryCategoryInput[]
+    createMany?: GoodCommentCreateManyCategoryCategoryInputEnvelope
+    set?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    disconnect?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    delete?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    connect?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    update?: GoodCommentUpdateWithWhereUniqueWithoutCategoryCategoryInput | GoodCommentUpdateWithWhereUniqueWithoutCategoryCategoryInput[]
+    updateMany?: GoodCommentUpdateManyWithWhereWithoutCategoryCategoryInput | GoodCommentUpdateManyWithWhereWithoutCategoryCategoryInput[]
+    deleteMany?: GoodCommentScalarWhereInput | GoodCommentScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type GoodCommentUncheckedUpdateManyWithoutCategoryCategoryNestedInput = {
+    create?: XOR<GoodCommentCreateWithoutCategoryCategoryInput, GoodCommentUncheckedCreateWithoutCategoryCategoryInput> | GoodCommentCreateWithoutCategoryCategoryInput[] | GoodCommentUncheckedCreateWithoutCategoryCategoryInput[]
+    connectOrCreate?: GoodCommentCreateOrConnectWithoutCategoryCategoryInput | GoodCommentCreateOrConnectWithoutCategoryCategoryInput[]
+    upsert?: GoodCommentUpsertWithWhereUniqueWithoutCategoryCategoryInput | GoodCommentUpsertWithWhereUniqueWithoutCategoryCategoryInput[]
+    createMany?: GoodCommentCreateManyCategoryCategoryInputEnvelope
+    set?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    disconnect?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    delete?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    connect?: GoodCommentWhereUniqueInput | GoodCommentWhereUniqueInput[]
+    update?: GoodCommentUpdateWithWhereUniqueWithoutCategoryCategoryInput | GoodCommentUpdateWithWhereUniqueWithoutCategoryCategoryInput[]
+    updateMany?: GoodCommentUpdateManyWithWhereWithoutCategoryCategoryInput | GoodCommentUpdateManyWithWhereWithoutCategoryCategoryInput[]
+    deleteMany?: GoodCommentScalarWhereInput | GoodCommentScalarWhereInput[]
+  }
+
+  export type CategoryCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<CategoryCreateWithoutCommentsInput, CategoryUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutCommentsInput
+    connect?: CategoryWhereUniqueInput
+  }
+
+  export type CategoryUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<CategoryCreateWithoutCommentsInput, CategoryUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutCommentsInput
+    upsert?: CategoryUpsertWithoutCommentsInput
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutCommentsInput, CategoryUpdateWithoutCommentsInput>, CategoryUncheckedUpdateWithoutCommentsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -4995,11 +5320,167 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type GoodCommentCreateWithoutCategoryCategoryInput = {
+    userId?: string
+    commentId?: number
+    categoryName: string
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GoodCommentUncheckedCreateWithoutCategoryCategoryInput = {
+    id?: number
+    userId?: string
+    commentId?: number
+    categoryName: string
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GoodCommentCreateOrConnectWithoutCategoryCategoryInput = {
+    where: GoodCommentWhereUniqueInput
+    create: XOR<GoodCommentCreateWithoutCategoryCategoryInput, GoodCommentUncheckedCreateWithoutCategoryCategoryInput>
+  }
+
+  export type GoodCommentCreateManyCategoryCategoryInputEnvelope = {
+    data: GoodCommentCreateManyCategoryCategoryInput | GoodCommentCreateManyCategoryCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GoodCommentUpsertWithWhereUniqueWithoutCategoryCategoryInput = {
+    where: GoodCommentWhereUniqueInput
+    update: XOR<GoodCommentUpdateWithoutCategoryCategoryInput, GoodCommentUncheckedUpdateWithoutCategoryCategoryInput>
+    create: XOR<GoodCommentCreateWithoutCategoryCategoryInput, GoodCommentUncheckedCreateWithoutCategoryCategoryInput>
+  }
+
+  export type GoodCommentUpdateWithWhereUniqueWithoutCategoryCategoryInput = {
+    where: GoodCommentWhereUniqueInput
+    data: XOR<GoodCommentUpdateWithoutCategoryCategoryInput, GoodCommentUncheckedUpdateWithoutCategoryCategoryInput>
+  }
+
+  export type GoodCommentUpdateManyWithWhereWithoutCategoryCategoryInput = {
+    where: GoodCommentScalarWhereInput
+    data: XOR<GoodCommentUpdateManyMutationInput, GoodCommentUncheckedUpdateManyWithoutCategoryCategoryInput>
+  }
+
+  export type GoodCommentScalarWhereInput = {
+    AND?: GoodCommentScalarWhereInput | GoodCommentScalarWhereInput[]
+    OR?: GoodCommentScalarWhereInput[]
+    NOT?: GoodCommentScalarWhereInput | GoodCommentScalarWhereInput[]
+    id?: IntFilter<"GoodComment"> | number
+    userId?: StringFilter<"GoodComment"> | string
+    commentId?: IntFilter<"GoodComment"> | number
+    category?: IntFilter<"GoodComment"> | number
+    categoryName?: StringFilter<"GoodComment"> | string
+    content?: StringFilter<"GoodComment"> | string
+    createdAt?: DateTimeFilter<"GoodComment"> | Date | string
+    updatedAt?: DateTimeFilter<"GoodComment"> | Date | string
+  }
+
+  export type CategoryCreateWithoutCommentsInput = {
+    name: string
+    parentId?: number | null
+    keyword?: string | null
+    icon?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CategoryUncheckedCreateWithoutCommentsInput = {
+    id?: number
+    name: string
+    parentId?: number | null
+    keyword?: string | null
+    icon?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CategoryCreateOrConnectWithoutCommentsInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutCommentsInput, CategoryUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type CategoryUpsertWithoutCommentsInput = {
+    update: XOR<CategoryUpdateWithoutCommentsInput, CategoryUncheckedUpdateWithoutCommentsInput>
+    create: XOR<CategoryCreateWithoutCommentsInput, CategoryUncheckedCreateWithoutCommentsInput>
+    where?: CategoryWhereInput
+  }
+
+  export type CategoryUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: CategoryWhereInput
+    data: XOR<CategoryUpdateWithoutCommentsInput, CategoryUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type CategoryUpdateWithoutCommentsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    parentId?: NullableIntFieldUpdateOperationsInput | number | null
+    keyword?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CategoryUncheckedUpdateWithoutCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    parentId?: NullableIntFieldUpdateOperationsInput | number | null
+    keyword?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GoodCommentCreateManyCategoryCategoryInput = {
+    id?: number
+    userId?: string
+    commentId?: number
+    categoryName: string
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GoodCommentUpdateWithoutCategoryCategoryInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    commentId?: IntFieldUpdateOperationsInput | number
+    categoryName?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GoodCommentUncheckedUpdateWithoutCategoryCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    commentId?: IntFieldUpdateOperationsInput | number
+    categoryName?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GoodCommentUncheckedUpdateManyWithoutCategoryCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    commentId?: IntFieldUpdateOperationsInput | number
+    categoryName?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
    * Aliases for legacy arg types
    */
+    /**
+     * @deprecated Use CategoryCountOutputTypeDefaultArgs instead
+     */
+    export type CategoryCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CategoryCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */

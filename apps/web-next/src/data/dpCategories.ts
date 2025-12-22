@@ -1,157 +1,217 @@
 export interface Category {
-  id: string;
-  name: string;
-  children?: Category[];
+  id: string
+  name: string
+  keyword?: string
+  icon?: string
+  children?: Category[]
 }
 
-export const DP_CATEGORIES: Category[] = [
+export const dpCategories: Category[] = [
   {
     id: 'food',
     name: '美食',
+    keyword: 'food',
+    icon: '🍽️',
     children: [
-      {
-        id: 'food-chinese', name: '中餐', children: [
-          { id: 'food-sichuan', name: '川菜' },
-          { id: 'food-cantonese', name: '粤菜' },
-          { id: 'food-hunan', name: '湘菜' },
-          { id: 'food-shandong', name: '鲁菜' },
-          { id: 'food-jiangsu', name: '苏菜' },
-          { id: 'food-zhejiang', name: '浙菜' },
-          { id: 'food-fujian', name: '闽菜' },
-          { id: 'food-anhui', name: '徽菜' },
-          { id: 'food-northeast', name: '东北菜' },
-          { id: 'food-shanghai', name: '本帮菜' },
-          { id: 'food-jiangxi', name: '赣菜' },
-          { id: 'food-shaanxi', name: '陕西菜' },
-          { id: 'food-shanxi', name: '山西菜' },
-          { id: 'food-yunnan', name: '云南菜' },
-          { id: 'food-guizhou', name: '贵州菜' },
-          { id: 'food-chaoshan', name: '潮汕菜' },
-          { id: 'food-hakka', name: '客家菜' },
-          { id: 'food-muslim', name: '清真/西北菜' }
-        ]
-      },
-      { id: 'food-hotpot', name: '火锅' },
-      { id: 'food-barbecue', name: '烧烤' },
-      { id: 'food-japanese', name: '日本料理' },
-      { id: 'food-western', name: '西餐' },
-      { id: 'food-fast', name: '快餐简餐' },
-      { id: 'food-snack', name: '小吃' },
-      { id: 'food-dessert', name: '甜点饮品' }
-    ]
+      { id: 'food-chinese', name: '中餐', keyword: 'food-chinese' },
+      { id: 'food-hotpot', name: '火锅', keyword: 'food-hotpot' },
+      { id: 'food-bbq', name: '烧烤烤串', keyword: 'food-bbq' },
+      { id: 'food-japan', name: '日本料理', keyword: 'food-japan' },
+      { id: 'food-western', name: '西餐', keyword: 'food-western' },
+      { id: 'food-korean', name: '韩国料理', keyword: 'food-korean' },
+      { id: 'food-buffet', name: '自助餐', keyword: 'food-buffet' },
+      { id: 'food-fast', name: '快餐简餐', keyword: 'food-fast' },
+      { id: 'food-shaokao', name: '小吃面食', keyword: 'food-shaokao' },
+      { id: 'food-dessert', name: '甜点饮品', keyword: 'food-dessert' },
+      { id: 'food-future', name: '创意菜', keyword: 'food-future' },
+      { id: 'food-sea', name: '海鲜', keyword: 'food-sea' },
+      { id: 'food-vegetarian', name: '素食', keyword: 'food-vegetarian' },
+      { id: 'food-pizza', name: '披萨', keyword: 'food-pizza' },
+      { id: 'food-jianbing', name: '小龙虾', keyword: 'food-jianbing' },
+      { id: 'food-beefnoodle', name: '兰州拉面', keyword: 'food-beefnoodle' },
+      { id: 'food-fastfood', name: '炸鸡汉堡', keyword: 'food-fastfood' },
+      { id: 'food-40', name: '其他美食', keyword: 'food-others' },
+    ],
+  },
+  {
+    id: 'drink',
+    name: '饮品',
+    keyword: 'drink',
+    icon: '☕',
+  },
+  {
+    id: 'hotel',
+    name: '酒店',
+    keyword: 'hotel',
+    icon: '🏨',
   },
   {
     id: 'entertainment',
-    name: '休闲娱乐',
+    name: '娱乐',
+    keyword: 'entertainment',
+    icon: '🎮',
     children: [
-      { id: 'ent-ktv', name: 'KTV' },
-      { id: 'ent-cinema', name: '电影院' },
-      { id: 'ent-boardgame', name: '桌游/棋牌' },
-      { id: 'ent-internet', name: '网吧/电竞馆' },
-      { id: 'ent-escape', name: '密室逃脱' },
-      { id: 'ent-billiards', name: '台球/保龄球' }
-    ]
+      { id: 'entertainment-karaoke', name: 'KTV', keyword: 'entertainment-karaoke' },
+      { id: 'entertainment-bars', name: '酒吧', keyword: 'entertainment-bars' },
+      { id: 'entertainment-cinema', name: '电影院', keyword: 'entertainment-cinema' },
+      { id: 'entertainment-billiards', name: '桌球室', keyword: 'entertainment-billiards' },
+      { id: 'entertainment-themed', name: '主题娱乐', keyword: 'entertainment-themed' },
+      { id: 'entertainment-esports', name: '网吧/电竞', keyword: 'entertainment-esports' },
+      { id: 'entertainment-football', name: '足球场', keyword: 'entertainment-football' },
+      { id: 'entertainment-basketball', name: '篮球场', keyword: 'entertainment-basketball' },
+      { id: 'entertainment-tennis', name: '网球场', keyword: 'entertainment-tennis' },
+      { id: 'entertainment-golf', name: '高尔夫', keyword: 'entertainment-golf' },
+      { id: 'entertainment-fishing', name: '垂钓', keyword: 'entertainment-fishing' },
+      { id: 'entertainment-others', name: '其他娱乐', keyword: 'entertainment-others' },
+    ],
   },
   {
     id: 'beauty',
-    name: '丽人/美业',
+    name: '美容',
+    keyword: 'beauty',
+    icon: '🌿',
     children: [
-      { id: 'beauty-hair', name: '美发' },
-      { id: 'beauty-nail', name: '美甲美睫' },
-      { id: 'beauty-spa', name: '美容/SPA' },
-      { id: 'beauty-makeup', name: '化妆品' }
-    ]
+      { id: 'beauty-hairsalon', name: '美发', keyword: 'beauty-hairsalon' },
+      { id: 'beauty-nails', name: '美甲', keyword: 'beauty-nails' },
+      { id: 'beauty-hotspa', name: '水疗/汗蒸', keyword: 'beauty-hotspa' },
+      { id: 'beauty-cosmetics', name: '化妆品', keyword: 'beauty-cosmetics' },
+      { id: 'beauty-eye', name: '美睫', keyword: 'beauty-eye' },
+      { id: 'beauty-medical', name: '医疗美容', keyword: 'beauty-medical' },
+      { id: 'beauty-others', name: '其他美容', keyword: 'beauty-others' },
+    ],
   },
   {
     id: 'parenting',
     name: '亲子',
+    keyword: 'parenting',
+    icon: '👶',
     children: [
-      { id: 'parenting-kidsplay', name: '亲子乐园' },
-      { id: 'parenting-education', name: '早教/幼教' },
-      { id: 'parenting-photography', name: '亲子摄影' }
-    ]
+      { id: 'parenting-education', name: '早教', keyword: 'parenting-education' },
+      { id: 'parenting-park', name: '亲子乐园', keyword: 'parenting-park' },
+      { id: 'parenting-animal', name: '动物园', keyword: 'parenting-animal' },
+      { id: 'parenting-museum', name: '博物馆/科技馆', keyword: 'parenting-museum' },
+      { id: 'parenting-travel', name: '亲子游', keyword: 'parenting-travel' },
+      { id: 'parenting-others', name: '其他亲子', keyword: 'parenting-others' },
+    ],
   },
   {
     id: 'fitness',
-    name: '运动健身',
+    name: '健身',
+    keyword: 'fitness',
+    icon: '🏋️',
     children: [
-      { id: 'fitness-gym', name: '健身房' },
-      { id: 'fitness-swim', name: '游泳馆' },
-      { id: 'fitness-yoga', name: '瑜伽/普拉提' }
-    ]
+      { id: 'fitness-gym', name: '健身房', keyword: 'fitness-gym' },
+      { id: 'fitness-yoga', name: '瑜伽/舞蹈', keyword: 'fitness-yoga' },
+      { id: 'fitness-swimming', name: '游泳馆', keyword: 'fitness-swimming' },
+      { id: 'fitness-badminton', name: '羽毛球馆', keyword: 'fitness-badminton' },
+      { id: 'fitness-bowling', name: '保龄球馆', keyword: 'fitness-bowling' },
+      { id: 'fitness-others', name: '其他健身', keyword: 'fitness-others' },
+    ],
   },
   {
     id: 'service',
     name: '生活服务',
+    keyword: 'service',
+    icon: '🛠️',
     children: [
-      { id: 'service-housekeeping', name: '家政' },
-      { id: 'service-laundry', name: '干洗/洗衣' },
-      { id: 'service-relocation', name: '搬家' },
-      { id: 'service-repair', name: '家电维修' }
-    ]
+      { id: 'service-cleaning', name: '家政/保洁', keyword: 'service-cleaning' },
+      { id: 'service-repair', name: '维修/安装', keyword: 'service-repair' },
+      { id: 'service-move', name: '搬家', keyword: 'service-move' },
+      { id: 'service-laundry', name: '洗衣店', keyword: 'service-laundry' },
+      { id: 'service-photo', name: '摄影/冲印', keyword: 'service-photo' },
+      { id: 'service-others', name: '其他服务', keyword: 'service-others' },
+    ],
   },
   {
     id: 'shopping',
     name: '购物',
+    keyword: 'shopping',
+    icon: '🛍️',
     children: [
-      { id: 'shopping-mall', name: '商场' },
-      { id: 'shopping-supermarket', name: '超市' },
-      { id: 'shopping-3c', name: '数码电器' },
-      { id: 'shopping-fashion', name: '服饰鞋包' }
-    ]
+      { id: 'shopping-mall', name: '商场/百货', keyword: 'shopping-mall' },
+      { id: 'shopping-supermarket', name: '超市', keyword: 'shopping-supermarket' },
+      { id: 'shopping-convenience', name: '便利店', keyword: 'shopping-convenience' },
+      { id: 'shopping-vegetable', name: '水果蔬菜', keyword: 'shopping-vegetable' },
+      { id: 'shopping-flower', name: '花店', keyword: 'shopping-flower' },
+      { id: 'shopping-others', name: '其他购物', keyword: 'shopping-others' },
+    ],
   },
   {
     id: 'home',
-    name: '家装家居',
+    name: '家居家装',
+    keyword: 'home',
+    icon: '🏠',
     children: [
-      { id: 'home-decoration', name: '装修设计' },
-      { id: 'home-furniture', name: '家具建材' },
-      { id: 'home-soft', name: '家居家纺' }
-    ]
+      { id: 'home-decoration', name: '装修设计', keyword: 'home-decoration' },
+      { id: 'home-furniture', name: '家具', keyword: 'home-furniture' },
+      { id: 'home-appliance', name: '家电', keyword: 'home-appliance' },
+      { id: 'home-build', name: '建材', keyword: 'home-build' },
+      { id: 'home-others', name: '其他家居', keyword: 'home-others' },
+    ],
   },
   {
     id: 'wedding',
-    name: '结婚',
+    name: '结婚/婚庆',
+    keyword: 'wedding',
+    icon: '💍',
     children: [
-      { id: 'wedding-photography', name: '婚纱摄影' },
-      { id: 'wedding-planning', name: '婚礼策划' },
-      { id: 'wedding-hotel', name: '婚宴酒店' }
-    ]
+      { id: 'wedding-photography', name: '婚纱摄影', keyword: 'wedding-photography' },
+      { id: 'wedding-planning', name: '婚礼策划', keyword: 'wedding-planning' },
+      { id: 'wedding-dress', name: '婚纱礼服', keyword: 'wedding-dress' },
+      { id: 'wedding-cake', name: '婚礼蛋糕', keyword: 'wedding-cake' },
+      { id: 'wedding-others', name: '其他婚庆', keyword: 'wedding-others' },
+    ],
   },
   {
     id: 'travel',
-    name: '旅游出行',
+    name: '旅游/出行',
+    keyword: 'travel',
+    icon: '✈️',
     children: [
-      { id: 'travel-scenic', name: '景点/乐园' },
-      { id: 'travel-hotel', name: '酒店/民宿' },
-      { id: 'travel-transport', name: '交通服务' }
-    ]
+      { id: 'travel-scenic', name: '景点', keyword: 'travel-scenic' },
+      { id: 'travel-hotel', name: '酒店/民宿', keyword: 'travel-hotel' },
+      { id: 'travel-photography', name: '旅拍', keyword: 'travel-photography' },
+      { id: 'travel-transport', name: '交通', keyword: 'travel-transport' },
+      { id: 'travel-others', name: '其他旅游', keyword: 'travel-others' },
+    ],
   },
   {
     id: 'education',
     name: '教育培训',
+    keyword: 'education',
+    icon: '🎓',
     children: [
-      { id: 'edu-language', name: '语言培训' },
-      { id: 'edu-art', name: '艺术培训' },
-      { id: 'edu-k12', name: 'K12辅导' }
-    ]
+      { id: 'education-language', name: '语言培训', keyword: 'education-language' },
+      { id: 'education-k12', name: 'K12培训', keyword: 'education-k12' },
+      { id: 'education-study', name: '留学', keyword: 'education-study' },
+      { id: 'education-skill', name: '技能培训', keyword: 'education-skill' },
+      { id: 'education-others', name: '其他教育', keyword: 'education-others' },
+    ],
   },
   {
     id: 'auto',
     name: '爱车',
+    keyword: 'auto',
+    icon: '🚗',
     children: [
-      { id: 'auto-wash', name: '洗车' },
-      { id: 'auto-repair', name: '维修保养' },
-      { id: 'auto-beauty', name: '汽车美容' }
-    ]
+      { id: 'auto-4s', name: '4S店', keyword: 'auto-4s' },
+      { id: 'auto-repair', name: '汽车维修', keyword: 'auto-repair' },
+      { id: 'auto-wash', name: '洗车', keyword: 'auto-wash' },
+      { id: 'auto-parts', name: '汽车配件', keyword: 'auto-parts' },
+      { id: 'auto-others', name: '其他爱车', keyword: 'auto-others' },
+    ],
   },
   {
     id: 'medical',
     name: '医疗健康',
+    keyword: 'medical',
+    icon: '🏥',
     children: [
-      { id: 'med-clinic', name: '诊所' },
-      { id: 'med-dental', name: '口腔' },
-      { id: 'med-checkup', name: '体检/医学检验' }
-    ]
-  }
-];
+      { id: 'medical-hospital', name: '医院', keyword: 'medical-hospital' },
+      { id: 'medical-clinic', name: '诊所', keyword: 'medical-clinic' },
+      { id: 'medical-pharmacy', name: '药店', keyword: 'medical-pharmacy' },
+      { id: 'medical-physical', name: '体检中心', keyword: 'medical-physical' },
+      { id: 'medical-others', name: '其他医疗', keyword: 'medical-others' },
+    ],
+  },
+]

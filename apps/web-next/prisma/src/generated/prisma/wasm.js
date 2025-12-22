@@ -144,6 +144,8 @@ exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   parentId: 'parentId',
+  keyword: 'keyword',
+  icon: 'icon',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -153,6 +155,7 @@ exports.Prisma.GoodCommentScalarFieldEnum = {
   userId: 'userId',
   commentId: 'commentId',
   category: 'category',
+  categoryName: 'categoryName',
   content: 'content',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

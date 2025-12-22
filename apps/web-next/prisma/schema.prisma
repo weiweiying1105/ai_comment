@@ -37,16 +37,25 @@ model Category {
   id        Int      @id @default(autoincrement())
   name      String   @unique // 分类名称
   parentId  Int?     // 父分类ID
+  keyword   String?  // 关键词
+  icon      String?  // 图标
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  // 反向关联：该分类下的好评记录
+  comments  GoodComment[] @relation(name: "CategoryToComments")
 }
 // 好评记录
 model GoodComment {
-  id        Int      @id @default(autoincrement())
-  userId    String   @default(cuid()) // 用户ID
-  commentId Int      @default(autoincrement()) // 评论ID
-  category   String   @default("good") // 好评类型
-  content   String  // 内容
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  userId        String   @default(cuid()) // 用户ID
+  commentId     Int      @default(autoincrement()) // 评论ID
+  category      Int      // 分类ID
+  categoryName  String   // 分类名称
+  content       String   // 内容
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // 关联分类
+  categoryCategory Category @relation(name: "CategoryToComments", fields: [category], references: [id])
 }

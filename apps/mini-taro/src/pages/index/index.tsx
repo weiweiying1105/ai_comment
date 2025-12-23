@@ -1,10 +1,9 @@
 import { FC, useEffect, useMemo, useState } from 'react'
-import { View, Text, Button, Slider, Textarea } from '@tarojs/components'
+import { View, Text, Button, Slider, Textarea, Image } from '@tarojs/components'
 import './index.scss'
 import Taro from '@tarojs/taro'
 import { httpGet, httpPost } from '@/utils/http'
 import { ICategory } from '@/mini-taro/typings/index'
-
 const OPTION_TAGS = [
   { key: 'warm', label: '语气更热情' },
   { key: 'photo', label: '提到拍照好看' },
@@ -86,15 +85,24 @@ const goAllCategory =()=>{
           min={50}
           max={300}
           step={1}
+          activeColor='rgb(249 245 6)'
+          blockColor='rgb(249 245 6)'
           value={limit}
           onChange={(e) => setLimit(Number(e.detail.value))}
+          
         />
       </View>
 
       <View className='section'>
         <View className='section-header'>
           <View className='section-title'>生成结果</View>
-          <Text className='copy-hint'>📋 复制</Text>
+          <View className='copy-btn'>
+              <Image className='copy-icon' src="https://res.cloudinary.com/dc6wdjxld/image/upload/v1766493141/copy_1_g1g6uc.png"></Image>
+             <Text className='copy-hint'>
+           复制
+          </Text>
+          </View>
+         
         </View>
         <View className='result-box'>
           <Textarea

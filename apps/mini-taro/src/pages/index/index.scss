@@ -1,6 +1,8 @@
+
+
 .profile-page {
   padding: 32rpx;
-  background: #ffffff;
+  background: rgba(248, 248, 248, .9);
   min-height: 100vh;
 }
 
@@ -112,7 +114,7 @@
 
 .result-box {
   background: #f7f8fa;
-  border-radius: 24rpx;
+  border-radius: 48rpx;
   padding: 24rpx;
 }
 
@@ -120,11 +122,27 @@
   min-height: 280rpx;
   font-size: 28rpx;
   padding: 16rpx;
+  width: 100%;
+  line-height: 32rpx;
 }
-
+.copy-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  color: #ffd400;
+  margin-top: 16rpx;
+   .copy-icon{
+    width: 24rpx;
+    height: 24rpx;
+    margin-left: 8rpx;
+  }
+}
 .copy-hint {
   font-size: 24rpx;
   color: #999;
+ 
 }
 
 .options {

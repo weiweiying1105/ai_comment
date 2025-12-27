@@ -2,6 +2,22 @@ import { NextRequest } from 'next/server'
 import prisma from '@/lib/prisma'
 import { createJsonResponse, ResponseUtil } from '@/lib/response'
 
+// 在生产环境启用 60s 缓存
+export const revalidate = 60
+
+// 轻量级内存缓存（开发/Node 运行时有效）
+const CATEGORY_CACHE_TTL_MS = 30 * 1000
+const __categoryCache: Map<string, { ts: number; data: any }> = (globalThis as any).__categoryCache || new Map()
+;(globalThis as any).__categoryCache = __categoryCache
+const getCached = (key: string) => {
+    const v = __categoryCache.get(key)
+    if (!v) return undefined
+    return Date.now() - v.ts < CATEGORY_CACHE_TTL_MS ? v.data : undefined
+}
+const setCached = (key: string, data: any) => {
+    __categoryCache.set(key, { ts: Date.now(), data })
+}
+
 const selectFields = {
     id: true,
     name: true,
@@ -64,11 +80,38 @@ export async function OPTIONS() {
 
 export async function GET(req: NextRequest) {
     try {
+        const t0 = Date.now()
         const { searchParams } = new URL(req.url)
         const keyword = searchParams.get('keyword') || undefined
         const top = searchParams.get('top')
         const parentIdParam = searchParams.get('parentId')
         const frequentlyUsed = searchParams.get('frequentlyUsed')
+        const limitParam = searchParams.get('limit')
+        const limit = limitParam ? Number(limitParam) : undefined
+
+        // 缓存 key
+        const cacheKey = JSON.stringify({
+            keyword,
+            top: !!top,
+            parentId: parentIdParam ? Number(parentIdParam) : null,
+            frequentlyUsed: frequentlyUsed === 'true',
+            limit,
+        })
+        const cached = getCached(cacheKey)
+        if (cached) {
+            const msg = frequentlyUsed === 'true'
+                ? '常用分类查询成功（缓存）'
+                : (keyword || top || parentIdParam
+                    ? '分类查询成功（含keyword、icon、active_icon）（缓存）'
+                    : '分类树查询成功（含keyword、icon、active_icon）（缓存）')
+            const tCache = Date.now()
+            console.log(`[API/category] cache-hit, total=${tCache - t0}ms`)
+            return createJsonResponse(ResponseUtil.success(cached, msg), {
+                headers: {
+                    'Cache-Control': 's-maxage=60, stale-while-revalidate=300'
+                }
+            })
+        }
 
         // 按需过滤
         const where: any = {}
@@ -77,7 +120,7 @@ export async function GET(req: NextRequest) {
         if (parentIdParam) where.parentId = Number(parentIdParam)
 
         // Default ordering
-        let orderBy = [{ parentId: 'asc' }, { id: 'asc' }]
+        let orderBy: Array<Record<string, 'asc' | 'desc'>> = [{ parentId: 'asc' }, { id: 'asc' }]
         
         // If frequentlyUsed is true, sort by use_count descending
         if (frequentlyUsed === 'true') {
@@ -86,22 +129,46 @@ export async function GET(req: NextRequest) {
             where.use_count = { gt: 0 }
         }
 
+        const take = frequentlyUsed === 'true' && typeof limit === 'number' ? Math.max(1, Math.min(limit, 200)) : undefined
+
         const categories = await prisma.category.findMany({
             where,
             select: selectFields,
-            orderBy
+            orderBy,
+            ...(take ? { take } : {})
         })
+        const tQuery = Date.now()
+        console.log(`[API/category] query=${tQuery - t0}ms, rows=${Array.isArray(categories) ? categories.length : 0}`)
 
         // 如果存在 parentId/顶级/keyword 过滤或请求的是常用分类，则直接返回扁平列表
         if (keyword || top || parentIdParam || frequentlyUsed === 'true') {
+            const msg = frequentlyUsed === 'true' ? '常用分类查询成功' : '分类查询成功（含keyword、icon、active_icon）'
+            setCached(cacheKey, categories)
+            const tEnd = Date.now()
+            console.log(`[API/category] flat-return total=${tEnd - t0}ms`)
             return createJsonResponse(
-                ResponseUtil.success(categories, frequentlyUsed === 'true' ? '常用分类查询成功' : '分类查询成功（含keyword、icon、active_icon）')
+                ResponseUtil.success(categories, msg),
+                {
+                    headers: {
+                        'Cache-Control': 's-maxage=60, stale-while-revalidate=300'
+                    }
+                }
             )
         }
 
         const tree = buildCategoryTree(categories as any)
+        const tTree = Date.now()
+        console.log(`[API/category] buildTree=${tTree - tQuery}ms`)
+        setCached(cacheKey, tree)
+        const tEnd = Date.now()
+        console.log(`[API/category] tree-return total=${tEnd - t0}ms`)
         return createJsonResponse(
-            ResponseUtil.success(tree, '分类树查询成功（含keyword、icon、active_icon）')
+            ResponseUtil.success(tree, '分类树查询成功（含keyword、icon、active_icon）'),
+            {
+                headers: {
+                    'Cache-Control': 's-maxage=60, stale-while-revalidate=300'
+                }
+            }
         )
     } catch (error: any) {
         return createJsonResponse(
@@ -110,4 +177,3 @@ export async function GET(req: NextRequest) {
         )
     }
 }
-// 移除重复的 CategoryNode 接口定义

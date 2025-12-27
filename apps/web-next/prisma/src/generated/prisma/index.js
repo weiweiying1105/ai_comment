@@ -164,7 +164,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\ai_comment\\apps\\web-next\\prisma\\src\\generated\\prisma",
+      "value": "/Users/weiyingwei/Documents/ai_comment/apps/web-next/prisma/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -173,12 +173,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\ai_comment\\apps\\web-next\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/weiyingwei/Documents/ai_comment/apps/web-next/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -200,8 +200,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// 小程序用户模型\nmodel User {\n  id        String  @id @default(cuid())\n  openId    String  @unique // 微信小程序 openId\n  unionId   String? @unique // 微信 unionId (可选)\n  nickName  String? // 用户昵称\n  avatarUrl String? // 头像URL\n  gender    Int? // 性别 0-未知 1-男 2-女\n  city      String? // 城市\n  province  String? // 省份\n  country   String? // 国家\n  language  String? // 语言\n\n  // 用户设置\n  currency String @default(\"CNY\") // 默认货币\n  timezone String @default(\"Asia/Shanghai\") // 时区\n\n  // 时间戳\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  lastLoginAt DateTime @default(now())\n\n  @@map(\"users\")\n}\n\n// 分类模型\nmodel Category {\n  id          Int           @id @default(autoincrement())\n  name        String        @unique // 分类名称\n  parentId    Int? // 父分类ID\n  keyword     String? // 关键词\n  icon        String? // 图标\n  active_icon String? // 活动图标\n  createdAt   DateTime      @default(now())\n  updatedAt   DateTime      @updatedAt\n  // 被使用次数，用来描述是否热门\n  use_count   Int           @default(0)\n  // 反向关联：该分类下的好评记录\n  comments    GoodComment[] @relation(name: \"CategoryToComments\")\n}\n\n// 好评记录\nmodel GoodComment {\n  id           Int      @id @default(autoincrement())\n  userId       String   @default(cuid()) // 用户ID\n  commentId    Int      @default(autoincrement()) // 评论ID\n  category     Int // 分类ID\n  categoryName String // 分类名称\n  content      String // 内容\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n\n  // 关联分类\n  categoryCategory Category @relation(name: \"CategoryToComments\", fields: [category], references: [id])\n}\n",
-  "inlineSchemaHash": "55bd2722d1a1758d757cd806ca29a593fa45ef8836197a5346a53ea12608f863",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// 小程序用户模型\nmodel User {\n  id        String  @id @default(cuid())\n  openId    String  @unique // 微信小程序 openId\n  unionId   String? @unique // 微信 unionId (可选)\n  nickName  String? // 用户昵称\n  avatarUrl String? // 头像URL\n  gender    Int? // 性别 0-未知 1-男 2-女\n  city      String? // 城市\n  province  String? // 省份\n  country   String? // 国家\n  language  String? // 语言\n\n  // 用户设置\n  currency String @default(\"CNY\") // 默认货币\n  timezone String @default(\"Asia/Shanghai\") // 时区\n\n  // 时间戳\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  lastLoginAt DateTime @default(now())\n\n  @@map(\"users\")\n}\n\n// 分类模型\nmodel Category {\n  id          Int           @id @default(autoincrement())\n  name        String        @unique // 分类名称\n  parentId    Int? // 父分类ID\n  keyword     String? // 关键词\n  icon        String? // 图标\n  active_icon String? // 活动图标\n  createdAt   DateTime      @default(now())\n  updatedAt   DateTime      @updatedAt\n  // 被使用次数，用来描述是否热门\n  use_count   Int           @default(0)\n  // 反向关联：该分类下的好评记录\n  comments    GoodComment[] @relation(name: \"CategoryToComments\")\n\n  // 高性能查询索引\n  @@index([parentId, id])\n  @@index([use_count, id])\n  @@index([keyword])\n}\n\n// 好评记录\nmodel GoodComment {\n  id           Int      @id @default(autoincrement())\n  userId       String   @default(cuid()) // 用户ID\n  commentId    Int      @default(autoincrement()) // 评论ID\n  category     Int // 分类ID\n  categoryName String // 分类名称\n  content      String // 内容\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n\n  // 关联分类\n  categoryCategory Category @relation(name: \"CategoryToComments\", fields: [category], references: [id])\n}\n",
+  "inlineSchemaHash": "f7c2fd5cad2b5074e50aaf348abd18fc2224b81d5894b050524fb39269e97023",
   "copyEngine": true
 }
 
@@ -239,8 +239,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "prisma/src/generated/prisma/query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
+path.join(process.cwd(), "prisma/src/generated/prisma/libquery_engine-darwin-arm64.dylib.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/src/generated/prisma/schema.prisma")

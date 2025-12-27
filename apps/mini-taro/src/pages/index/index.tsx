@@ -84,6 +84,15 @@ const goAllCategory =()=>{
               <Text className={`label}`} >更多</Text>
             </View>
         </View>
+        {/* 这里是二级分类 */}
+        <View className='second-tags'>
+          <View className='chip'>
+            <Text className='chip-label'>火锅</Text>
+            <Button className='chip-close'>
+              <Image className='chip-close-icon' src="https://res.cloudinary.com/dc6wdjxld/image/upload/v1766820858/close_1_bfrids.png"></Image>
+           </Button>
+         </View>
+        </View>
       </View>
 
       <View className='divider' />

@@ -47,6 +47,11 @@ model Category {
   use_count   Int           @default(0)
   // 反向关联：该分类下的好评记录
   comments    GoodComment[] @relation(name: "CategoryToComments")
+
+  // 高性能查询索引
+  @@index([parentId, id])
+  @@index([use_count, id])
+  @@index([keyword])
 }
 
 // 好评记录
